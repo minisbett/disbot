@@ -1,0 +1,12 @@
+- Add documentation
+  -> SlashCommand
+  -> SlashSubCommand
+  -> CommandHandlerAttribute
+  -> Utils class
+  -> ModuleCache
+  -> JsonEmbed
+  -> private fields in various classes
+
+- Implement better logging
+
+- Add better way to get and parse options
