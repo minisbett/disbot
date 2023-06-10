@@ -4,6 +4,9 @@ using Discord.WebSocket;
 
 namespace disbot.Modules;
 
+/// <summary>
+/// Base class for all modules of the Discord bot.
+/// </summary>
 public abstract class Module
 {
   /// <summary>

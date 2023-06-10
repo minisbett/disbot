@@ -5,6 +5,9 @@ using Module = disbot.Modules.Module;
 
 namespace Disbot;
 
+/// <summary>
+/// Responsible for resolving the modules of the Discord bot using reflection.
+/// </summary>
 public class ModuleResolver
 {
   /// <summary>
@@ -26,7 +29,7 @@ public class ModuleResolver
                                 .Where(x => x.Namespace == namesp || (subNamespaces && x.Namespace!.StartsWith(namesp)));
 
     // Get all types that are instantiable, are not compiler generated and have not been resolved yet.
-    types = types.Where(x => x is { IsClass: true, IsAbstract: false }
+    types = types.Where(x => x is { IsClass: true, IsAbstract: false, IsNested: false }
                           && x.GetConstructors().Any()
                           && x.GetCustomAttribute(typeof(CompilerGeneratedAttribute)) == null
                           && !Modules.Any(m => x.IsInstanceOfType(m)));

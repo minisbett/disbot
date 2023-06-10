@@ -7,13 +7,29 @@ using Module = disbot.Modules.Module;
 
 namespace disbot;
 
+/// <summary>
+/// Internal class for utility methods.
+/// </summary>
 internal static class Utils
 {
+  /// <summary>
+  /// Creates a comamnd handler delegate from the specified module and handler MethodInfo.
+  /// </summary>
+  /// <param name="method"></param>
+  /// <param name="module"></param>
+  /// <returns>The command handler delegate.</returns>
   public static Func<SocketSlashCommand, Task> CreateCommandHandler(MethodInfo method, Module module)
   {
     return (Func<SocketSlashCommand, Task>) Delegate.CreateDelegate(typeof(Func<SocketSlashCommand, Task>), module, method);
   }
 
+
+  /// <summary>
+  /// Gets the command path of the specified slash command.
+  /// This consists of the main command, as well as possible sub commands.
+  /// </summary>
+  /// <param name="command">The slash command object.</param>
+  /// <returns>The path of the slash command.</returns>
   public static IEnumerable<string> GetCommandPath(SocketSlashCommand command)
   {
     // Get the path of the executed command. (base command name followed by all subcommand names)

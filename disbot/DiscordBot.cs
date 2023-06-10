@@ -14,21 +14,36 @@ public class DiscordBot
   /// <summary>
   /// Discord.NET's socket client internally used by this instance.
   /// </summary>
-  public DiscordSocketClient Client { get; } = new DiscordSocketClient();
+  public DiscordSocketClient Client { get; } = new DiscordSocketClient(new DiscordSocketConfig() { GatewayIntents = GatewayIntents.All });
 
   /// <summary>
   /// The module resolver used to add modules to this DiscordBot instance.
   /// </summary>
   public ModuleResolver ModuleResolver { get; } = new ModuleResolver();
 
+  /// <summary>
+  /// The token of the Discord bot.
+  /// </summary>
   private string _token;
 
+  /// <summary>
+  /// Bool whether the Discord bot is currently running, or not.
+  /// </summary>
   private bool _running;
 
+  /// <summary>
+  /// The configuration delegate for the Discord bot, ran after the bot has started.
+  /// </summary>
   private Func<DiscordSocketClient, Task>? _configurator;
 
+  /// <summary>
+  /// The cancellation token for shutting down the Discord bot.
+  /// </summary>
   private CancellationTokenSource _runCancellationToken = new CancellationTokenSource();
 
+  /// <summary>
+  /// A dictionary of all command paths and their respective slash command and handler.
+  /// </summary>
   private Dictionary<string[], Func<SocketSlashCommand, Task>> _commandHandlerLinks = new Dictionary<string[], Func<SocketSlashCommand, Task>>();
 
   /// <summary>
@@ -181,7 +196,7 @@ public class DiscordBot
   /// <param name="token">The authentication token of the discord bot.</param>
   public static DiscordBot FromToken(string token)
   {
-    ArgumentNullException.ThrowIfNullOrEmpty(token);
+    ArgumentException.ThrowIfNullOrEmpty(token);
 
     return new DiscordBot(token);
   }
